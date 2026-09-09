@@ -1,45 +1,45 @@
-# Telegram File Store Bot (媒体文件存取与分发机器人)[cite: 1]
+# Telegram File Store Bot (媒体文件存取与分发机器人)
 
-基于 `python-telegram-bot` (v20+) 与 Docker Compose 构建的高性能 Telegram 私有文件存取与批量分发机器人。支持长串混淆提取码生成、批量文件打包、10个/组分页查看、强制加群/关注频道验证、文件级指纹去重以及每日自动导出 Excel 报表。[cite: 1]
-
----
-
-## ✨ 核心特性[cite: 1]
-
-- 📦 **单文件 / 批量打包上传**：[cite: 1]
-  - 支持视频、文档、图片、音频等全格式媒体文件。[cite: 1]
-  - 支持 `/batch` 批量收录模式与 `/done` 结算，自动打包区间文件。[cite: 1]
-- 📑 **10个/组 交互式分页发货**：[cite: 1]
-  - 提取多文件时按 10 个自动分组，防刷屏并避免触发 Telegram 频率限制（Flood Wait）。[cite: 1]
-  - 提供 `📥 查看下一组` 动态交互按钮，发完自动隐藏。[cite: 1]
-  - 内置 `⭐ 收藏` 与 `📢 防失联` 快捷跳转。[cite: 1]
-- 🔍 **文件指纹去重 (Deduplication)**：[cite: 1]
-  - 基于 Telegram 官方 `file_unique_id` 指纹机制。[cite: 1]
-  - 重复上传同一文件自动复用已有提取码，避免私有存储频道冗余。[cite: 1]
-  - 每日报表自动去重，同一提取码仅统计 1 份。[cite: 1]
-- 🛡️ **双重解码与持久化防丢**：[cite: 1]
-  - 混淆 Base64 提取码与 SQLite 本地持久化映射双重校验，容器重启后提取码永久有效。[cite: 1]
-  - 容错机制：自动捕获并跳过频道中被删除的历史消息（`Message to copy not found`），防止进程崩溃。[cite: 1]
-- 👥 **强制加群 / 频道关注验证**：[cite: 1]
-  - 未加入指定群组或频道的用户无法提取，提取前自动弹出引导与“我已加入”实时核验。[cite: 1]
-- 📊 **定时任务与每日 Excel 汇总**：[cite: 1]
-  - 每天 23:59 (Asia/Shanghai) 自动聚合当日生成记录，生成 `.xlsx` 表格并静默私发给管理员。[cite: 1]
-  - 支持管理员专属 `/export` 指令随时手动导出。[cite: 1]
+基于 `python-telegram-bot` (v20+) 与 Docker Compose 构建的高性能 Telegram 私有文件存取与批量分发机器人。支持长串混淆提取码生成、批量文件打包、10个/组分页查看、强制加群/关注频道验证、文件级指纹去重以及每日自动导出 Excel 报表。
 
 ---
 
-## 🚀 快速部署指南[cite: 1]
+## ✨ 核心特性
 
-### 1. 克隆代码仓库[cite: 1]
+- 📦 **单文件 / 批量打包上传**：
+  - 支持视频、文档、图片、音频等全格式媒体文件。
+  - 支持 `/batch` 批量收录模式与 `/done` 结算，自动打包区间文件。
+- 📑 **10个/组 交互式分页发货**：
+  - 提取多文件时按 10 个自动分组，防刷屏并避免触发 Telegram 频率限制（Flood Wait）。
+  - 提供 `📥 查看下一组` 动态交互按钮，发完自动隐藏。
+  - 内置 `⭐ 收藏` 与 `📢 防失联` 快捷跳转。
+- 🔍 **文件指纹去重 (Deduplication)**：
+  - 基于 Telegram 官方 `file_unique_id` 指纹机制。
+  - 重复上传同一文件自动复用已有提取码，避免私有存储频道冗余。
+  - 每日报表自动去重，同一提取码仅统计 1 份。
+- 🛡️ **双重解码与持久化防丢**： 
+  - 混淆 Base64 提取码与 SQLite 本地持久化映射双重校验，容器重启后提取码永久有效。 
+  - 容错机制：自动捕获并跳过频道中被删除的历史消息（`Message to copy not found`），防止进程崩溃。 
+- 👥 **强制加群 / 频道关注验证**： 
+  - 未加入指定群组或频道的用户无法提取，提取前自动弹出引导与“我已加入”实时核验。 
+- 📊 **定时任务与每日 Excel 汇总**： 
+  - 每天 23:59 (Asia/Shanghai) 自动聚合当日生成记录，生成 `.xlsx` 表格并静默私发给管理员。 
+  - 支持管理员专属 `/export` 指令随时手动导出。 
+
+---
+
+## 🚀 快速部署指南 
+
+### 1. 克隆代码仓库 
 
 ```bash
 git clone https://github.com/game315422/tg-file-store-bot.git
 cd tg-file-store-bot
 ```
 
-### 2. 配置环境变量 (.env)[cite: 1]
+### 2. 配置环境变量 (.env) 
 
-在项目根目录下新建 `.env` 文件：[cite: 1]
+在项目根目录下新建 `.env` 文件： 
 
 ```bash
 cat << 'EOF' > .env
@@ -60,25 +60,25 @@ FORCE_SUB_INVITE_LINK=https://t.me/your_group_link
 EOF
 ```
 
-### 3. 一键构建并启动 (Docker Compose)[cite: 1]
+### 3. 一键构建并启动 (Docker Compose) 
 
 ```bash
 docker compose up -d --build
 ```
 
-查看实时运行日志：[cite: 1]
+查看实时运行日志： 
 
 ```bash
 docker compose logs -f
 ```
 
-当日志显示 `Bot 在 Docker 中已启动，系统运行正常...` 即表示运行成功。[cite: 1]
+当日志显示 `Bot 在 Docker 中已启动，系统运行正常...` 即表示运行成功。 
 
 ---
 
-## 📖 使用说明[cite: 1]
+## 📖 使用说明 
 
-### 普通用户[cite: 1]
+### 普通用户 
 
 | 操作 / 指令 | 说明 |
 | :--- | :--- |
@@ -89,7 +89,7 @@ docker compose logs -f
 | `/done` | 结束批量打包，生成打包提取码与链接 |
 | **发送提取码** | 校验群组/频道成员资格后，按 10 个一组分页获取文件 |
 
-### 管理员专属[cite: 1]
+### 管理员专属 
 
 | 指令 | 说明 |
 | :--- | :--- |
@@ -98,7 +98,7 @@ docker compose logs -f
 
 ---
 
-## 📂 项目结构[cite: 1]
+## 📂 项目结构 
 
 ```text
 .
@@ -113,12 +113,12 @@ docker compose logs -f
 
 ---
 
-## 🛠️ 运维与更新[cite: 1]
+## 🛠️ 运维与更新 
 
-- **查看容器状态**：`docker compose ps`[cite: 1]
-- **重启机器人**：`docker compose restart`[cite: 1]
-- **停止运行**：`docker compose down`[cite: 1]
-- **拉取更新代码并重构**：[cite: 1]
+- **查看容器状态**：`docker compose ps` 
+- **重启机器人**：`docker compose restart` 
+- **停止运行**：`docker compose down` 
+- **拉取更新代码并重构**： 
   ```bash
   git pull
   docker compose down
