@@ -33,8 +33,8 @@
 ### 1. 克隆代码仓库 
 
 ```bash
-mkdir -p /root/tg-file-store-bot && cd /root/tg-file-store-bot
 git clone https://github.com/game315422/tg-file-store-bot.git
+cd tg-file-store-bot
 ```
 
 ### 2. 配置环境变量 (.env) 
