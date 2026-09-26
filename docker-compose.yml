@@ -1,10 +1,14 @@
 services:
   telegram-bot:
     build: .
-    container_name: tg_file_store_bot
-    restart: unless-stopped
-    env_file:
-      - .env
+    container_name: tg-file-store-bot
+    restart: always
+    environment:
+      - BOT_TOKEN=88000009:AA
+      - ADMIN_USER_ID=59
+      - DB_CHANNEL_ID=-100    # <--- 填入你自己的存储频道ID（带-100前缀）
+      - FORCE_SUB_CHANNEL_ID=-100
+      - FORCE_SUB_INVITE_LINK=https://
     volumes:
       - ./data:/app/data
     logging:
